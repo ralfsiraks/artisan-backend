@@ -15,6 +15,7 @@
         "APP_DEBUG": "true",
         "APP_URL": "https://yourproductionurl.com",
 
+        "APP_KEY": "base64:FFpI0HSJK3gnnVMHzWXs49gRHfqMdRljTsp8oLUFbes=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
