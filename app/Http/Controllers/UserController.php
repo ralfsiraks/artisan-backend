@@ -16,9 +16,8 @@ class UserController extends Controller
         ]);
 
         if (auth()->attempt($data)) {
-            $expiration = now()->addHour();
             $user = User::where('email', $data['email'])->first();
-            $token = $user->createToken($data['email'], [$expiration]);
+            $token = $user->createToken($data['email']);
             return response()->json(['token' => $token->plainTextToken], 202);
         }
         return response()->json(['message' => 'Login unsuccessful!'], 401);
