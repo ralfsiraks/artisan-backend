@@ -22,7 +22,7 @@ class ProductController extends Controller
         if($category === 'all') {
              $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
                      ->select('products.*', 'categories.title as category_title')
-                     ->paginate(4, ['*']);
+                     ->paginate(8, ['*']);
         } else {
             $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
                 ->select('products.*', 'categories.title as category_title')
