@@ -15,6 +15,7 @@ class ProductController extends Controller
         $productIds = json_decode($productArr, true);
         $products = Product::whereIn('id', $productIds)->get();
         return response()->json($products);
+        // komentars
     }
 
     public function getCatalog(Request $request, string $category) {
