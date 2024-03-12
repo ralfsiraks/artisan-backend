@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiscountCodes;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Laravel\Sanctum\Sanctum;
 
@@ -26,3 +27,6 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/user', [UserController::class, 'user'])->middleware('auth:sanctum');
+Route::get('/cart', [ProductController::class, 'getCart']);
+Route::get('/catalog/{category:title}', [ProductController::class, 'getCatalog']);
+Route::get('/product', [ProductController::class, 'getProduct']);

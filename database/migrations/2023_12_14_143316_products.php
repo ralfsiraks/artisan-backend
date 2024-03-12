@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('artist');
             $table->integer('height');
             $table->integer('width');
-            $table->string('description');
+            $table->text('description');
             $table->double('price');
             $table->double('old_price')->nullable();
             $table->string('image_url');

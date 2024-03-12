@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class UserData extends Model
+class Category extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = 'user_data';
+    protected $table = 'categories';
 
     /**
      * The attributes that are mass assignable.
@@ -18,10 +18,8 @@ class UserData extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'surname',
-        'phone', 
-        'user_id'
+        'title',
+        'image_url',
     ];
 
     /**
@@ -40,8 +38,8 @@ class UserData extends Model
     protected $casts = [
     ];
 
-    public function user(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Product::class);
     }
 }

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserData;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -18,9 +17,9 @@ class UserController extends Controller
         if (auth()->attempt($data)) {
             $user = User::where('email', $data['email'])->first();
             $token = $user->createToken($data['email']);
-            return response()->json(['token' => $token->plainTextToken], 202);
+            return response()->json(['token' => $token->plainTextToken, 'name'=> $user->user_data['name'], 'surname'=> $user->user_data['surname']], 202);
         }
-        return response()->json(['message' => 'Login unsuccessful!'], 401);
+        return response()->json(['message' => 'Login failed!'], 401);
     }
 
     public function register(Request $request) {
@@ -41,13 +40,19 @@ class UserController extends Controller
                 'password' => $data['password'],
                 'email_verified_at' => now(),
             ]);
+            $user->user_data()->create([
+                'name' => $data['name'],
+                'surname' => $data['surname'],
+            ]);
             $token = $user->createToken($data['email'])->plainTextToken;
-            return response()->json(['token' => $token], 201);
+            return response()->json(['token' => $token, 'name'=> $user->user_data['name'], 'surname'=> $user->user_data['surname']], 201);
         }
     }
 
     public function user(Request $request) {
         $user = auth()->user();
+        $userData = $user->user_data; // Access the relationship using user_data(), not userData
+
         return response()->json($user);
     }
 

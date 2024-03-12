@@ -14,11 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('tracking')->nullable();
             $table->date('created_at');
-            $table->date('delivered_at')->nullable();
-            $table->integer('delivery_type_id');
-            $table->integer('delivery_price');
             $table->integer('discount_id');
         });
     }

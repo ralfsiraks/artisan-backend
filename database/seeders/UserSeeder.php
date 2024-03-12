@@ -12,11 +12,11 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeders.
      */
+
     public function run(): void
     {
         DB::table('users')->insert([
-            'email' => 'deez@example.com',
-            'email_verified_at' => now(), // Set email as verified immediately
+            'email' => 'seeder@email.com',
             'password' => Hash::make('password'),
             'remember_token' => Str::random(60), // Generate a random remember token
             'created_at' => now(), // Set created_at to current time
