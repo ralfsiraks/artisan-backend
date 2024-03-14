@@ -14,11 +14,18 @@ return new class extends Migration
         Schema::create('discount_codes', function (Blueprint $table) {
             $table->id();
             $table->string('code', 50)->unique();
-            $table->tinyInteger('amount');
+            $table->tinyInteger('amount')->unsigned();
             $table->date('start_date');
             $table->date('end_date');
         });
     }
+
+    public function rules() {
+        return [
+            'amount' => 'required|integer|min:1|max:100',
+            ];
+    }
+
 
     /**
      * Reverse the migrations.
