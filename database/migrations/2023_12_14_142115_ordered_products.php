@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('product_id');
             $table->integer('order_id');
-            $table->date('price');
+            $table->double('price');
         });
     }
 
