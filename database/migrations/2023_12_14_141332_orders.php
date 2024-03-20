@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->date('created_at');
             $table->integer('discount_id')->nullable();
+            $table->string('status')->default('Completed');
         });
     }
 

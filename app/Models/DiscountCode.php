@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Order extends Model
+class DiscountCode extends Model
 {
     public $timestamps = false;
+    protected $table = 'discount_codes';
     use HasFactory;
 
     /**
@@ -18,10 +18,10 @@ class Order extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'created_at',
-        'discount_id', 
-        'status'
+        'code',
+        'amount',
+        'start_date', 
+        'end_date', 
     ];
 
     /**
@@ -40,11 +40,8 @@ class Order extends Model
     protected $casts = [
     ];
 
-    public function ordered_products(): HasMany {
-        return $this->hasMany(OrderedProduct::class);
-    }
-
-    public function discount_code(): HasOne {
-        return $this->hasOne(DiscountCode::class, 'id', 'discount_id');
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class, 'discount_id', 'id');
     }
 }

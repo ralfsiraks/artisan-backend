@@ -20,6 +20,15 @@ class HistoryController extends Controller
              $orderedProduct->product->price = $orderedProduct->price;
          });
      });
+
+     $orders->transform(function ($order) {
+        if ($order->discount_code) {
+            $order->discount_amount = $order->discount_code->amount;
+        } else {
+            $order->discount_amount = 0;
+        }
+        return $order;
+    });
  
      // Return the user's order history
      return response()->json($orders);

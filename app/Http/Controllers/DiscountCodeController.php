@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DiscountCode;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class DiscountCodes extends Controller
+class DiscountCodeController extends Controller
 {
     public function checkCode(Request $request) {
         $code = $request->header('code');
-        $response = DB::table('discount_codes')
-            ->where('code',  $code)
-            ->get();
+        $response = DiscountCode::where('code', $code)->get();
         return response()->json($response);
     }
 }
