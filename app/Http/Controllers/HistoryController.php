@@ -21,6 +21,7 @@ class HistoryController extends Controller
          });
      });
 
+    //  Add a discount_amount property 
      $orders->transform(function ($order) {
         if ($order->discount_code) {
             $order->discount_amount = $order->discount_code->amount;
@@ -30,7 +31,6 @@ class HistoryController extends Controller
         return $order;
     });
  
-     // Return the user's order history
      return response()->json($orders);
     }
 
@@ -42,12 +42,6 @@ class HistoryController extends Controller
             // Keep the price from the ordered_products table
             $orderedProduct->product->price = $orderedProduct->price;
         });
-        // if ($order->discount_code) {
-        //     $order->discount_amount = $order->discount_code->amount;
-        // } else {
-        //     $order->discount_amount = 0;
-        // }
-
         return response()->json($order);
     }
 }
