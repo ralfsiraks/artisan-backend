@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
-    public function orderHistory(Request $request) {
+    public function getOrderHistory(Request $request) {
         $user = auth()->user();
 
          $orders = Order::with('ordered_products.product')
@@ -32,5 +32,22 @@ class HistoryController extends Controller
  
      // Return the user's order history
      return response()->json($orders);
+    }
+
+    public function getOrder(Request $request, int $orderId) {
+        $order = Order::with('ordered_products', 'discount_code')->find($orderId);
+        
+
+        $order->ordered_products->each(function ($orderedProduct) {
+            // Keep the price from the ordered_products table
+            $orderedProduct->product->price = $orderedProduct->price;
+        });
+        // if ($order->discount_code) {
+        //     $order->discount_amount = $order->discount_code->amount;
+        // } else {
+        //     $order->discount_amount = 0;
+        // }
+
+        return response()->json($order);
     }
 }
