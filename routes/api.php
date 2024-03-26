@@ -30,6 +30,7 @@ Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanc
 Route::get('/user', [UserController::class, 'user'])->middleware('auth:sanctum');
 Route::get('/cart', [ProductController::class, 'getCart']);
 Route::get('/catalog', function() { return ['cuh' => 'guh'] ;});
+// komentars
 Route::get('/product', [ProductController::class, 'getProduct']);
 Route::post('/checkout', [CheckoutController::class, 'checkout'])->middleware('auth:sanctum');
 Route::get('/history', [HistoryController::class, 'getOrderHistory'])->middleware('auth:sanctum');
