@@ -28,7 +28,7 @@ class ProductController extends Controller
         
         $products = $this->paginateResults($request, $query);
         
-        return response()->json($products);
+        return response()->json(['test' => 'test']);
     }
     
     public function buildQuery(Request $request) {
