@@ -16,6 +16,7 @@ class ProductController extends Controller
     }
 
     public function getCatalog(Request $request) {
+        return response()->json(['test' => 'test2']);
         $query = $this->buildQuery($request);
         $searchTerm = $request->input('search');
         
@@ -28,7 +29,6 @@ class ProductController extends Controller
         
         $products = $this->paginateResults($request, $query);
         
-        return response()->json(['test' => 'test']);
     }
     
     public function buildQuery(Request $request) {
