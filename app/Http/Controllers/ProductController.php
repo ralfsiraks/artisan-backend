@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function getCart(Request $request) {
-        return response()->json(["test"=>"test"]);
+        return response()->json(["test"=>"cart"]);
         // $productArr = $request->header('cart');
         // $productIds = json_decode($productArr, true);
         // $products = Product::whereIn('id', $productIds)->get();
@@ -16,7 +16,7 @@ class ProductController extends Controller
     }
 
     public function getCatalog(Request $request) {
-        return response()->json(["test"=>"test"]);
+        return response()->json(["test"=>"catalog"]);
         // $query = $this->buildQuery($request);
         // $searchTerm = $request->input('search');
         
