@@ -16,19 +16,20 @@ class ProductController extends Controller
     }
 
     public function getCatalog(Request $request) {
-        $query = $this->buildQuery($request);
-        $searchTerm = $request->input('search');
+        return response()->json(["test"=>"test"]);
+        // $query = $this->buildQuery($request);
+        // $searchTerm = $request->input('search');
         
-        if ($searchTerm) {
-            $query->where(function($q) use ($searchTerm) {
-                $q->where('products.title', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('products.artist', 'like', '%' . $searchTerm . '%');
-            });
-        }
+        // if ($searchTerm) {
+        //     $query->where(function($q) use ($searchTerm) {
+        //         $q->where('products.title', 'like', '%' . $searchTerm . '%')
+        //           ->orWhere('products.artist', 'like', '%' . $searchTerm . '%');
+        //     });
+        // }
         
-        $products = $this->paginateResults($request, $query);
+        // $products = $this->paginateResults($request, $query);
         
-        return response()->json($products);
+        // return response()->json($products);
     }
     
     public function buildQuery(Request $request) {
