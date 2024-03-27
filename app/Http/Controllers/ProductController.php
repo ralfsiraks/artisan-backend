@@ -8,28 +8,27 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function getCart(Request $request) {
-        return response()->json(["test"=>"cart"]);
-        // $productArr = $request->header('cart');
-        // $productIds = json_decode($productArr, true);
-        // $products = Product::whereIn('id', $productIds)->get();
-        // return response()->json($products);
+        $productArr = $request->header('cart');
+        $productIds = json_decode($productArr, true);
+        $products = Product::whereIn('id', $productIds)->get();
+        return response()->json($products);
+        // komentars
     }
 
     public function getCatalog(Request $request) {
-        return response()->json(["test"=>"catalog"]);
-        // $query = $this->buildQuery($request);
-        // $searchTerm = $request->input('search');
+        $query = $this->buildQuery($request);
+        $searchTerm = $request->input('search');
         
-        // if ($searchTerm) {
-        //     $query->where(function($q) use ($searchTerm) {
-        //         $q->where('products.title', 'like', '%' . $searchTerm . '%')
-        //           ->orWhere('products.artist', 'like', '%' . $searchTerm . '%');
-        //     });
-        // }
+        if ($searchTerm) {
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('products.title', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('products.artist', 'like', '%' . $searchTerm . '%');
+            });
+        }
         
-        // $products = $this->paginateResults($request, $query);
+        $products = $this->paginateResults($request, $query);
         
-        // return response()->json($products);
+        return response()->json($products);
     }
     
     public function buildQuery(Request $request) {
