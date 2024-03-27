@@ -15,44 +15,45 @@ class ProductController extends Controller
         // return response()->json($products);
     }
 
-    // public function getCatalog(Request $request) {
-    //     $query = $this->buildQuery($request);
-    //     $searchTerm = $request->input('search');
+    public function getCatalog(Request $request) {
+        return response()->json(["test"=>"test"]);
+        // $query = $this->buildQuery($request);
+        // $searchTerm = $request->input('search');
         
-    //     if ($searchTerm) {
-    //         $query->where(function($q) use ($searchTerm) {
-    //             $q->where('products.title', 'like', '%' . $searchTerm . '%')
-    //               ->orWhere('products.artist', 'like', '%' . $searchTerm . '%');
-    //         });
-    //     }
+        // if ($searchTerm) {
+        //     $query->where(function($q) use ($searchTerm) {
+        //         $q->where('products.title', 'like', '%' . $searchTerm . '%')
+        //           ->orWhere('products.artist', 'like', '%' . $searchTerm . '%');
+        //     });
+        // }
         
-    //     $products = $this->paginateResults($request, $query);
+        // $products = $this->paginateResults($request, $query);
         
-    //     return response()->json($products);
-    // }
+        // return response()->json($products);
+    }
     
-    // public function buildQuery(Request $request) {
-    //     $sortBy = $request->input('sort_by', 'id');
-    //     $sortOrder = $request->input('sort_order', 'asc');
-    //     $category = $request->input('category', 'all');
+    public function buildQuery(Request $request) {
+        $sortBy = $request->input('sort_by', 'id');
+        $sortOrder = $request->input('sort_order', 'asc');
+        $category = $request->input('category', 'all');
     
-    //     $query = Product::join('categories', 'products.category_id', '=', 'categories.id')
-    //                     ->select('products.*', 'categories.title as category_title');
+        $query = Product::join('categories', 'products.category_id', '=', 'categories.id')
+                        ->select('products.*', 'categories.title as category_title');
     
-    //     if ($category !== 'all') {
-    //         $query->where('categories.title', str_replace('_', ' ', $category));
-    //     }
+        if ($category !== 'all') {
+            $query->where('categories.title', str_replace('_', ' ', $category));
+        }
     
-    //     // Apply sorting
-    //     $query->orderBy($sortBy, $sortOrder);
+        // Apply sorting
+        $query->orderBy($sortBy, $sortOrder);
     
-    //     return $query;
-    // }
+        return $query;
+    }
     
-    // public function paginateResults(Request $request, $query) {
-    //     $perPage = 12;
-    //     return $query->paginate($perPage, ['*'], 'page', $request->input('page'));
-    // }
+    public function paginateResults(Request $request, $query) {
+        $perPage = 12;
+        return $query->paginate($perPage, ['*'], 'page', $request->input('page'));
+    }
     
 
     
