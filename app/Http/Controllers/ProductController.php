@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function getCart(Request $request) {
-        $productArr = $request->header('cart');
-        $productIds = json_decode($productArr, true);
-        $products = Product::whereIn('id', $productIds)->get();
-        return response()->json($products);
-        // komentars
+        return response()->json(["test"=>"test"]);
+        // $productArr = $request->header('cart');
+        // $productIds = json_decode($productArr, true);
+        // $products = Product::whereIn('id', $productIds)->get();
+        // return response()->json($products);
     }
 
     public function getCatalog(Request $request) {
