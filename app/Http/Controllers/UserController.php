@@ -50,11 +50,39 @@ class UserController extends Controller
         }
     }
 
-    public function user(Request $request) {
+    public function getUser(Request $request) {
         $user = auth()->user();
-        $userData = $user->user_data; // Access the relationship using user_data(), not userData
+        $userData = $user->user_data; // Access the relationship using user_data
 
         return response()->json($user);
+    }
+
+    public function updateUser(Request $request) {
+        $user = auth()->user();
+        $userData = $user->user_data; // Access the relationship using user_data
+        
+        // Get the data from the request body
+        $requestData = $request->all();
+    
+        // Update user attributes based on the request data
+        foreach ($requestData as $key => $value) {
+            // Check if the attribute exists on the user model and update it
+            if (isset($user->$key)) {
+                $user->$key = $value;
+            } 
+            // Check if the user_data exists and if the attribute exists on the user_data model, then update it
+            elseif ($userData && isset($userData->$key)) {
+                $userData->$key = $value;
+            }
+        }
+    
+        // Save the updated user and user_data
+        $user->save();
+        if ($userData) {
+            $userData->save();
+        }
+    
+        return response()->json($userData, 200);
     }
 
     public function logout(Request $request) {

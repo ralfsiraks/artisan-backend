@@ -23,14 +23,19 @@ Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => ['auth:sanctum']], function() {
+    Route::post('/logout', [UserController::class, 'logout']);
+    Route::get('/user', [UserController::class, 'getUser']);
+    Route::patch('/user', [UserController::class, 'updateUser']);
+    Route::post('/checkout', [CheckoutController::class, 'checkout']);
+    Route::get('/history', [HistoryController::class, 'getOrderHistory']);
+    Route::get('/order/{id}', [HistoryController::class, 'getOrder']);
+});
+
 Route::get('/code', [DiscountCodeController::class, 'checkCode']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
-Route::get('/user', [UserController::class, 'user'])->middleware('auth:sanctum');
 Route::get('/cart', [ProductController::class, 'getCart']);
 Route::get('/catalog', [ProductController::class, 'getCatalog']);
 Route::get('/product', [ProductController::class, 'getProduct']);
-Route::post('/checkout', [CheckoutController::class, 'checkout'])->middleware('auth:sanctum');
-Route::get('/history', [HistoryController::class, 'getOrderHistory'])->middleware('auth:sanctum');
-Route::get('/order/{id}', [HistoryController::class, 'getOrder'])->middleware('auth:sanctum');
+
