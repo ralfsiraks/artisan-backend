@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-use Laravel\Sanctum\Sanctum;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,6 +26,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/user', [UserController::class, 'getUser']);
     Route::patch('/user', [UserController::class, 'updateUser']);
+    Route::patch('/password', [UserController::class, 'updatePassword']);
     Route::post('/checkout', [CheckoutController::class, 'checkout']);
     Route::get('/history', [HistoryController::class, 'getOrderHistory']);
     Route::get('/order/{id}', [HistoryController::class, 'getOrder']);

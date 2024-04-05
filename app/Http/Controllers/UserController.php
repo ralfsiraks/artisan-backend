@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\UserData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -54,7 +54,7 @@ class UserController extends Controller
         $user = auth()->user();
         $userData = $user->user_data; // Access the relationship using user_data
 
-        return response()->json($user);
+        return response()->json($user, 200);
     }
 
     public function updateUser(Request $request) {
@@ -90,6 +90,28 @@ class UserController extends Controller
         $user->currentAccessToken()->delete();
 
         return response()->json(['message' => 'Logout successful!'], 200);
+    }
+
+    public function updatePassword(Request $request) {
+        // Validate the incoming request data
+        $request->validate([
+            'oldPassword' => 'required|string|min:8',
+            'newPassword' => 'required|string|min:8', 
+        ]);
+    
+        // Get the authenticated user
+        $user = auth()->user();
+    
+        // Check if the current password matches the user's stored password
+        if (!Hash::check($request->oldPassword, $user->getAuthPassword())) {
+            return response()->json(['message' => 'current password incorrect'], 400);
+        }
+    
+        // Update the user's password
+        $user->password = $request->newPassword;
+        $user->save();
+    
+        return response()->json(['message' => 'updated'], 200);
     }
     
 }

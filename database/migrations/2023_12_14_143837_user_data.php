@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname');
-            $table->bigInteger('phone')->nullable();
             $table->integer('user_id');
         });
     }
