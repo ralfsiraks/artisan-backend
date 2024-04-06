@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
             $table->date('created_at');
             $table->integer('discount_id')->nullable();
             $table->string('status')->default('Completed');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }
 

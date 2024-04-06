@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/user', [UserController::class, 'getUser']);
     Route::patch('/user', [UserController::class, 'updateUser']);
     Route::patch('/password', [UserController::class, 'updatePassword']);
+    Route::delete('/delete', [UserController::class, 'deleteUser']);
     Route::post('/checkout', [CheckoutController::class, 'checkout']);
     Route::get('/history', [HistoryController::class, 'getOrderHistory']);
     Route::get('/order/{id}', [HistoryController::class, 'getOrder']);
