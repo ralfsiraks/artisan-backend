@@ -42,8 +42,8 @@ class CheckoutController extends Controller
                 $lineItems
             ],
             'mode' => 'payment',
-            'success_url' => 'https://kvalifikacija-artisan.vercel.app', // Replace with your actual success URL
-            'cancel_url' => 'https://kvalifikacija-artisan.vercel.app', // Replace with your actual cancel URL
+            'success_url' => 'https://kvalifikacija-artisan.vercel.app',
+            'cancel_url' => 'https://kvalifikacija-artisan.vercel.app/cart',
             'customer_creation' => 'always',
         ]);
 
