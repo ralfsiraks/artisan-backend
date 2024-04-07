@@ -49,8 +49,8 @@ class CheckoutController extends Controller
                 $lineItems
             ],
             'mode' => 'payment',
-            'success_url' => "http://localhost:4200/success?session={CHECKOUT_SESSION_ID}",
-            'cancel_url' => 'http://localhost:4200/cart',
+            'success_url' => "https://kvalifikacija-artisan.vercel.app//success?session={CHECKOUT_SESSION_ID}",
+            'cancel_url' => 'https://kvalifikacija-artisan.vercel.app//cart',
             'customer_creation' => 'always',
             'customer_email' => $user->email,
             'metadata' => [
