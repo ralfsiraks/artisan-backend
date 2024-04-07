@@ -151,7 +151,7 @@ class CheckoutController extends Controller
             $session = $event->data->object;
             $cart = json_decode($session->metadata->cart);
             $userId = $session->metadata->user_id;
-            $discountId = $session->metadata->discount_id;
+            $discountId = (int) $session->metadata->discount_id;
 
             $order = $this->createOrder($cart, $userId, $discountId);
             break;
