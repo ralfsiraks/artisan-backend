@@ -29,10 +29,13 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::patch('/password', [UserController::class, 'updatePassword']);
     Route::delete('/delete', [UserController::class, 'deleteUser']);
     Route::post('/checkout', [CheckoutController::class, 'checkout']);
+    Route::get('/stripe-session', [CheckoutController::class, 'getSession']);
     Route::get('/history', [HistoryController::class, 'getOrderHistory']);
     Route::get('/order/{id}', [HistoryController::class, 'getOrder']);
 });
 
+// routes/api.php
+Route::post('/stripe/webhook', [DiscountCodeController::class, 'handleWebhook']);
 Route::get('/code', [DiscountCodeController::class, 'checkCode']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
