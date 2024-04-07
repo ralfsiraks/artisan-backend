@@ -135,7 +135,7 @@ class CheckoutController extends Controller
     }
 
     public function handleWebhook(Request $request)
-{
+    {
     // Verify the webhook signature
     try {
         $payload = $request->getContent();
@@ -147,7 +147,7 @@ class CheckoutController extends Controller
 
     // Handle the event
     switch ($event->type) {
-        case 'checkout.session.completed':
+        case 'payment_intent.succeeded':
             $session = $event->data->object;
             $cart = json_decode($session->metadata->cart);
             $userId = $session->metadata->user_id;
