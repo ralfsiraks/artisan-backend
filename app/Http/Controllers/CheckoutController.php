@@ -147,7 +147,7 @@ class CheckoutController extends Controller
 
     // Handle the event
     switch ($event->type) {
-        case 'payment_intent.succeeded':
+        case 'checkout.session.completed':
             $session = $event->data->object;
             $cart = json_decode($session->metadata->cart);
             $userId = $session->metadata->user_id;
