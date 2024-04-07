@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 });
 
 // routes/api.php
-Route::post('/stripe/webhook', [DiscountCodeController::class, 'handleWebhook']);
+Route::post('/stripe/webhook', [CheckoutController::class, 'handleWebhook']);
 Route::get('/code', [DiscountCodeController::class, 'checkCode']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
