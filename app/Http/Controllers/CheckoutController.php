@@ -136,52 +136,53 @@ class CheckoutController extends Controller
 
     public function handleWebhook(Request $request)
     {
-    // Verify the webhook signature
-    try {
-        $payload = $request->getContent();
-        $sigHeader = $request->header('Stripe-Signature');
-        $event = Webhook::constructEvent($payload, $sigHeader, env('STRIPE_WEBHOOK_SEC'));
-    } catch (SignatureVerificationException $e) {
-        return response()->json(['error' => 'Invalid signature'], 400);
-    }
-
-    // Handle the event
-    switch ($event->type) {
-        case 'checkout.session.completed':
-            $session = $event->data->object;
-            $cart = json_decode($session->metadata->cart);
-            $userId = $session->metadata->user_id;
-            $discountId = (int) $session->metadata->discount_id;
-
-            $order = $this->createOrder($cart, $userId, $discountId);
-            break;
-        // Handle other event types...
-    }
-
-    return response()->json(['success' => true]);
-}
-
-private function createOrder(array $cart, int $userId, ?int $discountId): Order
-{
-    $order = Order::create([
-        'user_id' => $userId,
-        'created_at' => now(),
-        'discount_id' => $discountId
-    ]);
-
-    foreach ($cart as $productId) {
-        $product = Product::find($productId);
-        if ($product) {
-            OrderedProduct::create([
-                'order_id' => $order->id,
-                'product_id' => $productId,
-                'price' => $product->price
-                // Add any additional fields you need for the ordered product
-            ]);
+        // Verify the webhook signature
+        try {
+            $payload = $request->getContent();
+            $sigHeader = $request->header('Stripe-Signature');
+            $event = Webhook::constructEvent($payload, $sigHeader, env('STRIPE_WEBHOOK_SEC'));
+        } catch (SignatureVerificationException $e) {
+            return response()->json(['error' => 'Invalid signature'], 400);
         }
+
+        // Handle the event
+        switch ($event->type) {
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+                $cart = json_decode($session->metadata->cart);
+                $userId = $session->metadata->user_id;
+                $discountId = (int) $session->metadata->discount_id;
+                $paymentStatus = $session->payment_status;
+
+                $order = $this->createOrder($cart, $userId, $paymentStatus, $discountId);
+                break;
+            // Handle other event types...
+        }
+
+        return response()->json(['success' => true]);
     }
 
-    return $order;
-}
+    private function createOrder(array $cart, int $userId,  string $paymentStatus, ?int $discountId): Order
+    {
+        $order = Order::create([
+            'user_id' => $userId,
+            'created_at' => now(),
+            'discount_id' => $discountId,
+            'status' => $paymentStatus
+        ]);
+
+        foreach ($cart as $productId) {
+            $product = Product::find($productId);
+            if ($product) {
+                OrderedProduct::create([
+                    'order_id' => $order->id,
+                    'product_id' => $productId,
+                    'price' => $product->price
+                ]);
+            }
+        }
+
+        return $order;
+    }
 
 }
