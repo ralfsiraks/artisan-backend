@@ -62,7 +62,7 @@ class ProductController extends Controller
             if ($filter) {
                 switch ($filter) {
                     case 'S':
-                        $query->where("products.$attribute", '<=', 800);
+                        $query->where("products.$attribute", '<=', 1200);
                         break;
                     case 'M':
                         $query->whereBetween("products.$attribute", [1200, 2400]);
