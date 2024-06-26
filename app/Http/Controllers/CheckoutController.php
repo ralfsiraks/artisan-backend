@@ -156,7 +156,6 @@ class CheckoutController extends Controller
 
                 $order = $this->createOrder($cart, $userId, $paymentStatus, $discountId);
                 break;
-            // Handle other event types...
         }
 
         return response()->json(['success' => true]);
